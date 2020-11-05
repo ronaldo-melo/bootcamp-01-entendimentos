@@ -25,6 +25,19 @@ ATUALIZAÇÃO 04/11/2020
 
 Proposta 
 
+FEIGN
+
 O que é Feign? é um declarador de serviços web. Torna a escrita de web services mais fácil. Para dizer para a aplicação SpringBoot que o Feign será usado é preciso usar a anotação @EnableFeignClients no arquivo que faz o start da aplicação. Esta anotação irá tornar as interfaces que declaram ser Feign Clients
 componentes no Spring. Para usar o Fiegn é preciso criar uma interface e anota-lá com @FeignClient. Na anotação @FeignClient para configurar um cliente de API são usados parâmetros. O parâmetro value recebe um valor arbitrário para designar o nome do cliente. Com o argumento 'url' é especificado o caminho da API. Desde que uma interface seja um cliente Feign, é possível usar as annotations do Spring Web para declarar outros endereços de API's diferentes para serem consumidas por uma mesma aplicação.
 OBS: Na anotação @FeignClient em versões anteriores era precisa informar apenas o atributo'url', atualmente é obrigatório forncer o nome da api no atributo 'name'. Também é preciso declarar no application.properties a chave-valor 'feign.analise-url=http://localhost:9999/' que indica em qual porta está rodando a API (cuja o feign é cliente) a ser consumida na aplicação. Em tempo de execução o valor na parâmetro URL (na interface que declara ser um cliente Feign) será substuído pelo valor da chave presente no application.properties devido ao place holder ("${feign.analise-url}") declarada na url.
+
+HEALTH CHECK
+
+No contexto de uma aplicação web é um serviço que ajuda a identificar se a aplicação está funcionando conforme o esperado, se há algum crash na API ou demasiada carga. De posse dessas informações a implemtação de Health Check na API é capaz de tomar decisões para remediar a situação (dentre as situações acima) inesperada. Dentre as medidas poder haver deslisgamento da API ou restart dela em outro servidor. Para que a plataforma consiga operar conforme o descrito anteriormente é preciso expor ou destinar alguma operação na API para que a plataforma consiga fazer a chamada desta operação e em seguida verificar se o funcionamente da API está normal.
+
+Em contexto de API's REST, o método GET pode ser usado para a operação de checagem da "saúde" do sistema. A plataforma Health Check usada no Spring Boot se  chama Actuator, ou seja, em aplicações Spring o Actuator fará a "triagem" do funcionamento da API. Para verificar o end point da operação de check-n do Actuator usar '/actuator' no endereço da API.
+
+DICA: O DESENVOLVEDOR DEVE DESDE O INÍCIO DA API INCORPORAR ESSE PADRÃO, PARA QUE TODO O PROJETO/SERVIÇO CRIADO ESTEJA COM A IMPLEMENTAÇÃO DESTE PADRÃO.
+
+
+
